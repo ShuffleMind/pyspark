@@ -4,6 +4,7 @@ Para fazer o download do Docker, é necessário criar uma conta no site:
 https://store.docker.com/editions/community/docker-ce-desktop-windows
 
 ***Criação do container***
+
 O comando abaixo, faz o download da imagem jupyter/pyspark-notebook do Docker hub.  E faz build do container com o nome Spark na porta 8888
 
 docker run -it --rm -p 8888:8888 –-name spark jupyter/pyspark-notebook

@@ -37,6 +37,7 @@ def createParquet():
         print("Erro ao ler o arquivo")
         raise
 
+
 def payment_method():
     #metodo para criacao de dimensao de tipo de pagamentos
     dfPayment = spark.read.option("header","true")\
@@ -55,9 +56,8 @@ def payment_method():
     df_payment_type =  dfPayment.select("payment_type","Payment_des").distinct()
     df_payment_type.write.parquet('/home/jovyan/NY_TAXI_RIDES_'+'PAYMENT_TYPE')
           
+
 if __name__ == '__main__':
     #fazendo a chamada do metodo de conversao dos dados para parquet
     createParquet()
-    
-    #fazendo a chamado do metodo de criacao de dimensao de tipo de pagamentos
     payment_method()

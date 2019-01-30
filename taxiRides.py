@@ -37,26 +37,6 @@ def createParquet():
         print("Erro ao ler o arquivo")
         raise
 
-def payment_method():
-    #metodo para criacao de dimensao de tipo de pagamentos
-    dfPayment = spark.read.option("header","true")\
-                .option("inferschema","true")\
-                .parquet("/home/jovyan/NY_TAXI_RIDES")
-    print('Criando dimensao de tipo de pagamento ')
-    dfPayment = dfPayment\
-                .withColumn("Payment_des", functions\
-                .when(dfPayment.payment_type == 1, 'CREDIT CARD')
-                .when(dfPayment.payment_type == 2, 'CASH')
-                .when(dfPayment.payment_type == 3, 'NO CHARGE')
-                .when(dfPayment.payment_type == 4, 'DISPUTE')
-                .when(dfPayment.payment_type == 5, 'UNKNOWN')
-                .otherwise('VOIDED TRIP')
-                )
-    dfPayment.write.parquet('/home/jovyan/NY_TAXI_RIDES'+'PAYMENT')
-          
 if __name__ == '__main__':
     #fazendo a chamada do metodo de conversao dos dados para parquet
     createParquet()
-    
-    #fazendo a chamado do metodo de criacao de dimensao de tipo de pagamentos
-    payment_method()

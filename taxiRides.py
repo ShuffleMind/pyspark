@@ -41,7 +41,7 @@ def payment_method():
     #metodo para criacao de dimensao de tipo de pagamentos
     dfPayment = spark.read.option("header","true")\
                 .option("inferschema","true")\
-                .parquet("/home/jovyan/NY_TAXI_RIDES.parquet")
+                .parquet("/home/jovyan/NY_TAXI_RIDES")
     print('Criando dimensao de tipo de pagamento ')
     dfPayment = dfPayment\
                 .withColumn("Payment_des", functions\

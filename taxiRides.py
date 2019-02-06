@@ -3,7 +3,7 @@ from pyspark.sql import functions
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import unix_timestamp,udf,hour,minute,from_unixtime,date_format,year,month
 
-print('criando sessao do spark')
+print('building spark session')
 spark = SparkSession\
     .builder\
     .appName("NYTaxiRides2Paquet")\
@@ -13,19 +13,19 @@ def createParquet():
 
     try:
         #reading csv files
-        print('Iniciando a leitura dos arquivos de entrada')
+        print('Reading data files')
         df = spark.read.option("header","true")\
             .option("inferschema","true")\
             .csv("/home/jovyan/2017_Yellow_Taxi_Trip_Data.csv")
         
-        print('Arquivo carregado ao dataframe com sucesso')
+        print('Dataframe has been created successfully')
         try:
-           #iniciando a criação do arquivo em parquet
+           #creating parquet files
            print('Iniciando a criacao de arquivos em parquet')
            df.write.parquet('/home/jovyan/NY_TAXI_RIDES')#partitionBy("Year","Month")\
                
-           print('Arquivos gerados com sucesso')
-           print('Fim do pipeline')
+           print('')
+           print('End of pipeline')
         except:
             print('Erro ao escrever arquivo')
             raise
@@ -39,11 +39,11 @@ def createParquet():
 
 
 def payment_method():
-    #metodo para criacao de dimensao de tipo de pagamentos
+    #creating payment method dimension
     dfPayment = spark.read.option("header","true")\
                 .option("inferschema","true")\
                 .parquet("/home/jovyan/NY_TAXI_RIDES")
-    print('Criando dimensao de tipo de pagamento ')
+    print('creating payment method dimension')
     dfPayment = dfPayment\
                 .withColumn("Payment_des", functions\
                 .when(dfPayment.payment_type == 1, 'CREDIT CARD')
@@ -58,6 +58,6 @@ def payment_method():
           
 
 if __name__ == '__main__':
-    #fazendo a chamada do metodo de conversao dos dados para parquet
+    #Running the functions to create parquet files 
     createParquet()
     payment_method()

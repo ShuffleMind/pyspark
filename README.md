@@ -7,7 +7,7 @@ https://store.docker.com/editions/community/docker-ce-desktop-windows
 
 O comando abaixo, faz o download da imagem jupyter/pyspark-notebook do Docker hub.  E faz build do container com o nome Spark na porta 8888
 
-docker run -it --rm -p 8888:8888 jupyter/pyspark-notebook
+docker run --rm -p 8888:8888 --name spark jupyter/pyspark-notebook
 
 **Acessando o jupyter**
 
